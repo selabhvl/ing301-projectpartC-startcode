@@ -144,14 +144,15 @@ async def sensor(did: int):
 async def actuator(did: int):
     """ get current state for actuator did"""
     try:
-        return {"actuator activation state": smart_house.get_all_devices()[did].get_current_state()}
+        x = smart_house.get_all_devices()[did]
+        return {"actuator {0} state".format(x.nickname): x.get_current_state()}
     except KeyError:
         raise HTTPException(status_code=404, detail="No such device id")
     except AttributeError:
         raise HTTPException(status_code=400, detail="Device requested is not a actuator")
 
 
-@app.put("/smarthouse/device/{id}", status_code=201)
+@app.put("/smarthouse/device/{did}")
 async def actuator(did: int, activation: ActuatorState):
     """ update current state for actuator did"""
     try:
@@ -162,13 +163,10 @@ async def actuator(did: int, activation: ActuatorState):
         raise HTTPException(status_code=404, detail="No such device id")
     except AttributeError:
         raise HTTPException(status_code=400, detail="Device requested is not a actuator")
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Device is not controlled by on off")
 
 
 if __name__ == '__main__':
     uvicorn.run(app, host="127.0.0.1", port=8000)
-    #house = build_demo_house()
-    #did = 14
-    #a = smart_house.get_all_devices()[did]
-    #a.set_current_value(2.5)
-    #b = smart_house.get_all_devices()[did]
-    #c = 1
+
