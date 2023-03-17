@@ -6,7 +6,6 @@ from device import Device
 
 
 class SensorMeasurement(BaseModel):
-
     value: str
 
 
