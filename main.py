@@ -88,17 +88,13 @@ async def device(did: int):
 async def sensor(did: int):
     """get current sensor measurement for sensor did"""
     try:
-        return smart_house.get_all_devices()[did].get_current_value
+        return {"value": smart_house.get_all_devices()[did].get_current_value()}
     except KeyError:
         raise HTTPException(status_code=404, detail="No such device id")
     except AttributeError:
         raise HTTPException(status_code=400, detail="Device requested is not a sensor")
 
 
-'''
-
-
-'''
 @app.post("/smarthouse/sensor/{did}/current", status_code=201)
 async def sensor(did: int, measurement: SensorMeasurement):
     """add measurement for sensor did
@@ -109,9 +105,64 @@ async def sensor(did: int, measurement: SensorMeasurement):
     """
     try:
         smart_house.get_all_devices()[did].set_current_value(float(measurement.value))
-        return "Measurement value {0} added to device {1}".format(measurement.value, did)
+        return {"success": "Measurement value {0} added to device {1}".format(measurement.value, did)}
     except KeyError:
         raise HTTPException(status_code=404, detail="No such device id")
+    except AttributeError:
+        raise HTTPException(status_code=400, detail="Device requested is not a sensor")
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Value entered not a valid value")
+
+
+@app.get("/smarthouse/sensor/{did}/values")
+async def sensor(did: int):
+    """get all available measurements for sensor did"""
+    try:
+        x = smart_house.get_all_devices()[did].get_current_values()
+        y = zip(range(0, len(x)), x)
+        return dict(y)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="No such device id")
+    except AttributeError:
+        raise HTTPException(status_code=400, detail="Device requested is not a sensor")
+
+@app.delete("/smarthouse/sensor/{did}/oldest", status_code=200)
+async def sensor(did: int):
+    """delete oldest measurements for sensor did"""
+    try:
+        smart_house.get_all_devices()[did].delete_oldest_value()
+        return {"success": "Oldest measurement deleted!"}
+    except KeyError:
+        raise HTTPException(status_code=404, detail="No such device id")
+    except AttributeError:
+        raise HTTPException(status_code=400, detail="Device requested is not a sensor")
+    except IndexError:
+        raise HTTPException(status_code=400, detail="Sensor contains no readings")
+
+
+@app.get("/smarthouse/actuator/{did}/current")
+async def actuator(did: int):
+    """ get current state for actuator did"""
+    try:
+        return {"actuator activation state": smart_house.get_all_devices()[did].get_current_state()}
+    except KeyError:
+        raise HTTPException(status_code=404, detail="No such device id")
+    except AttributeError:
+        raise HTTPException(status_code=400, detail="Device requested is not a actuator")
+
+
+@app.put("/smarthouse/device/{id}", status_code=201)
+async def actuator(did: int, activation: ActuatorState):
+    """ update current state for actuator did"""
+    try:
+        x = smart_house.get_all_devices()[did]
+        x.set_current_state(activation.state)
+        return {"success": "state of device {0} set to {1}".format(x.nickname, activation.state)}
+    except KeyError:
+        raise HTTPException(status_code=404, detail="No such device id")
+    except AttributeError:
+        raise HTTPException(status_code=400, detail="Device requested is not a actuator")
+
 
 if __name__ == '__main__':
     uvicorn.run(app, host="127.0.0.1", port=8000)

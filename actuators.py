@@ -6,7 +6,6 @@ from device import Device
 
 
 class ActuatorState(BaseModel):
-
     state: str
 
 
@@ -53,8 +52,13 @@ class HeatOven(HeatControlActuator):
 
 
 class LightBulb(SimpleOnOffActuator):
+    is_active: bool | None = False
 
-    pass
+    def get_current_state(self):
+        return self.is_active
+
+    def set_current_state(self, is_active: str):
+        self.is_active = bool(is_active)
 
 
 class SmartOutlet(SimpleOnOffActuator):
