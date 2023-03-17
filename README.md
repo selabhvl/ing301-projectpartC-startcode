@@ -67,7 +67,7 @@ API'et ha følgende endepunkter for tilgang til sensorer
 
 - `POST smarthouse/sensor/{did}/current` - add measurement for sensor `did`
 
-- `GET smarthouse/sensor/{did}/values` - get all available measurements for sensor `did`
+- `GET smarthouse/sensor/{did}/values?limit=n` - get `n` latest available measurements for sensor `did`. If query parameter not present, then all available measurements.
 
 - `DELETE smarthouse/sensor/{did}/oldest` - delete oldest measurements for sensor `did`
 
