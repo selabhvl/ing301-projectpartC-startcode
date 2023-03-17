@@ -52,7 +52,7 @@ async def smarthouse(fid: int):
 
 
 # feil i oppgaven?
-@app.get("/smarthouse/floor/{fid}/room/")
+@app.get("/smarthouse/floor/{fid}/room")
 async def smarthouse(fid: int):
     """information about all rooms on a given floor fid"""
     try:
