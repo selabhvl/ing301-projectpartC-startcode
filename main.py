@@ -4,6 +4,8 @@
 
 # uvicorn main:app --reload
 
+import uvicorn
+
 from fastapi import FastAPI, Response, status
 from fastapi.staticfiles import StaticFiles
 from typing import Union
@@ -26,3 +28,7 @@ app.mount("/welcome", StaticFiles(directory="static"), name="static")
 @app.get("/")
 def root():
     return {"message": "Welcome to SmartHouse Cloud REST API - Powered by FastAPI"}
+
+
+if __name__ == '__main__':
+    uvicorn.run(app, host="127.0.0.1", port=8000)

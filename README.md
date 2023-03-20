@@ -28,6 +28,14 @@ uvicorn main:app --reload
 
 som gjør at tjenesten settes i drift ved å bruke `uvicorn` web-tjeneren. 
 
+Litt avhengig av Python installasjon kan det være nødvendig å starte web-tjeneren med:
+
+```
+python -m uvicorn main:app --reload
+```
+
+Det er også mulig å kjøre web-tjenesten i debug-modus ved å kjørt `main.py` scriptet.
+
 For løsning av oppgaven kan det være en god ide å søke inspiration i eksemplet fra forelesningen i uke 12 der FastAPI ble brukt til å utvikle en REST API for sykkelcomputer eksemplet:
 
 Koden finnes her:
@@ -52,7 +60,7 @@ REST API'et som skal utvikles skal gjøre det mulig å hente informasjon om oppb
 
 - `GET smarthouse/floor/{fid}` - information about a floor given by `fid` 
  
-- `GET smarthouse/floor/{fid}/room/` - information about all rooms on a given floor `fid`
+- `GET smarthouse/floor/{fid}/room` - information about all rooms on a given floor `fid`
 
 - `GET smarthouse/floor/{fid}/room/{rid}`- information about a specific room `rid` on a given floor `fid`
 
@@ -75,7 +83,7 @@ API'et ha følgende endepunkter for tilgang til aktuatorer
 
 - `GET smarthouse/actuator/{did}/current` - get current state for actuator `did`
 
-- `PUT smarthouse/device/{id}` - update current state for actuator `did`
+- `PUT smarthouse/device/{did}` - update current state for actuator `did`
 
 
 ## Levering av prosjekt
