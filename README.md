@@ -34,7 +34,9 @@ Litt avhengig av Python installasjon kan det være nødvendig å starte web-tjen
 python -m uvicorn main:app --reload
 ```
 
-Det er også mulig å kjøre web-tjenesten i debug-modus ved å kjørt `main.py` scriptet.
+Det er også mulig å kjøre web-tjenesten i debug-modus ved å kjørt `main.py` scriptet. 
+
+Kommandoene ovenfor må utføres i mappen som inneholder filen `main.py`
 
 For løsning av oppgaven kan det være en god ide å søke inspiration i eksemplet fra forelesningen i uke 12 der FastAPI ble brukt til å utvikle en REST API for sykkelcomputer eksemplet:
 
