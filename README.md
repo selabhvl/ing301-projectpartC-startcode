@@ -50,7 +50,13 @@ https://fastapi.tiangolo.com
 
 REST API'et skal dere teste ved å skrive noen test i [Postman](https://www.postman.com) verktøyet som også blev demonstrert på forelesningen i uke 11. 
 
-TODO: Her kommer lenke til video
+https://hvl.instructure.com/courses/22301/pages/opptak-fastapi-og-postman?module_item_id=638477 
+
+Testene i Postman for sykkelcomputer eksemplet kan gjerne brukes som inspiration: 
+
+https://github.com/selabhvl/ing301public/blob/main/examples/12_restapi_webservices/BCRestAPI.postman_collection.json
+
+De kan importeres inn i Postman.
 
 ## REST API endepunkter
 
