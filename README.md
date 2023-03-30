@@ -28,6 +28,16 @@ uvicorn main:app --reload
 
 som gjør at tjenesten settes i drift ved å bruke `uvicorn` web-tjeneren. 
 
+Litt avhengig av Python installasjon kan det være nødvendig å starte web-tjeneren med:
+
+```
+python -m uvicorn main:app --reload
+```
+
+Det er også mulig å kjøre web-tjenesten i debug-modus ved å kjørt `main.py` scriptet. 
+
+Kommandoene ovenfor må utføres i mappen som inneholder filen `main.py`
+
 For løsning av oppgaven kan det være en god ide å søke inspiration i eksemplet fra forelesningen i uke 12 der FastAPI ble brukt til å utvikle en REST API for sykkelcomputer eksemplet:
 
 Koden finnes her:
@@ -40,19 +50,25 @@ https://fastapi.tiangolo.com
 
 REST API'et skal dere teste ved å skrive noen test i [Postman](https://www.postman.com) verktøyet som også blev demonstrert på forelesningen i uke 11. 
 
-TODO: Her kommer lenke til video
+https://hvl.instructure.com/courses/22301/pages/opptak-fastapi-og-postman?module_item_id=638477 
+
+Testene i Postman for sykkelcomputer eksemplet kan gjerne brukes som inspiration: 
+
+https://github.com/selabhvl/ing301public/blob/main/examples/12_restapi_webservices/BCRestAPI.postman_collection.json
+
+De kan importeres inn i Postman.
 
 ## REST API endepunkter
 
 REST API'et som skal utvikles skal gjøre det mulig å hente informasjon om oppbygging av smarthuset viat følgene API endepunkter som alle skal returnere et svar i JSON-format.
 
 - `GET smarthouse/` - information on the smart house
-- 
+
 - `GET smarthouse/floor` - information on all floors
 
 - `GET smarthouse/floor/{fid}` - information about a floor given by `fid` 
  
-- `GET smarthouse/floor/{fid}/room/` - information about all rooms on a given floor `fid`
+- `GET smarthouse/floor/{fid}/room` - information about all rooms on a given floor `fid`
 
 - `GET smarthouse/floor/{fid}/room/{rid}`- information about a specific room `rid` on a given floor `fid`
 
@@ -67,7 +83,7 @@ API'et ha følgende endepunkter for tilgang til sensorer
 
 - `POST smarthouse/sensor/{did}/current` - add measurement for sensor `did`
 
-- `GET smarthouse/sensor/{did}/values` - get all available measurements for sensor `did`
+- `GET smarthouse/sensor/{did}/values?limit=n` - get `n` latest available measurements for sensor `did`. If query parameter not present, then all available measurements.
 
 - `DELETE smarthouse/sensor/{did}/oldest` - delete oldest measurements for sensor `did`
 
@@ -75,7 +91,7 @@ API'et ha følgende endepunkter for tilgang til aktuatorer
 
 - `GET smarthouse/actuator/{did}/current` - get current state for actuator `did`
 
-- `PUT smarthouse/device/{id}` - update current state for actuator `did`
+- `PUT smarthouse/device/{did}` - update current state for actuator `did`
 
 
 ## Levering av prosjekt

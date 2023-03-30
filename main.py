@@ -3,9 +3,11 @@
 # https://fastapi.tiangolo.com/tutorial/
 
 # uvicorn main:app --reload
+
 # python -m uvicorn main:app --reload
 import uvicorn
 from fastapi import FastAPI, Response, status, HTTPException
+
 from fastapi.staticfiles import StaticFiles
 from typing import Union
 
@@ -30,6 +32,7 @@ async def root():
     return {"message": "Welcome to SmartHouse Cloud REST API - Powered by FastAPI"}
 
 
+
 @app.get("/smarthouse")
 async def smarthouse():
     """information on the smart house"""
@@ -51,7 +54,6 @@ async def smarthouse(fid: int):
         raise HTTPException(status_code=404, detail="Index out of range")
 
 
-# feil i oppgaven?
 @app.get("/smarthouse/floor/{fid}/room")
 async def smarthouse(fid: int):
     """information about all rooms on a given floor fid"""
@@ -166,7 +168,5 @@ async def actuator(did: int, activation: ActuatorState):
     except ValueError:
         raise HTTPException(status_code=400, detail="Device is not controlled by on off")
 
-
 if __name__ == '__main__':
     uvicorn.run(app, host="127.0.0.1", port=8000)
-
