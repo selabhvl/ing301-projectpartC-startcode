@@ -16,6 +16,27 @@ igjen også kopiere filene til henholdsvis løsningsforslagene A og B inn for å
 Dere kopierer inn filene fra dette repository'et ("Download as ZIP") inn i det eksisterende prosjekt slik at 
 mappestrukturen skal se noenlunde slik ut:
 
+```
+.
+├── data
+│  └── db.sql
+├── README.md               <-- erstatt hvis du vil
+├── smarthouse
+│  ├── __init__.py
+│  ├── api.py               <-- nytt
+│  ├── domain.py
+│  └── persistence.py
+├── tests
+│  ├── __init__.py
+│  ├── bruno                <-- nytt
+│  │  └── ...
+│  ├── demo_house.py
+│  ├── test_part_a.py
+│  └── test_part_b.py
+└── www                     <-- nytt
+   └── ...
+```
+
 
 Selv om det er mulig (og at dette vil være en veldig lærrik oppgave) å implementere en HTTP-server helt fra bunn av,
 så ville dette være veldig tidkrevende også. Vi skal derfor bruke en bibliotek som heter [FastAPI](https://fastapi.tiangolo.com).
@@ -87,7 +108,7 @@ python -m pip install "uvicorn[standard]"
 Nå skulle alt være på plass for å kunne kjøre applikasjonen:
 
 ```shell
-python -m uvicorn smarthouse/api:app --reload
+python -m uvicorn smarthouse.api:app --reload
 ```
 
 når konsollen viser noe slik:
@@ -184,7 +205,9 @@ Viktig er at dere på forhånd tar en avgjørelse om hvordan inn- og utdata for 
 
 En del av oppgaven er å teste deres endepunkter. 
 For dette anbefaler vi Bruno-verktøyet som gjør det mulig å lage en _Collection_ av test-request og sjekker disse inn i git.
-Dette startkode repository inneholder en slik påbegynt "Test-Suite".
+Dette startkode repository inneholder en slik påbegynt "Test-Suite" som ligger under `tests/bruno`.
+Du kan åpne denne samlingen ved å trykke "Open Collection" når du starter Bruno og så navigerer du den nevnte mappen i din filsystem. 
+Her er det også demonstrert hvordan du kan bruker _variable_ og hvordan man skrive tests i Bruno ved brul av _assertions_ (forventninger).
 
 ## Tips og diverse
 
