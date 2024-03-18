@@ -200,6 +200,18 @@ for å [oversette dine egne klasser automatisk](https://docs.pydantic.dev/latest
 
 Viktig er at dere på forhånd tar en avgjørelse om hvordan inn- og utdata for hver endepunkt skal være strukturert. 
 
+> [!WARNING]
+> Når du i løpet av oppgaven skal legge til en database-forbindelse ved å bruke `SmartHouseRepository` kan det være
+> at du løper i en feilmelding som `SQLite objects created in a thread can only be used in that same thread.` i så fall
+> må du erstatte følgende linjen i `persistenc.py`
+> ```python
+> self.conn = sqlite3.connect(file, check_same_thread=False)
+> ```
+> med 
+> ```python
+> self.conn = sqlite3.connect(file, check_same_thread=False)
+> ```
+
 
 ## Testing 
 
