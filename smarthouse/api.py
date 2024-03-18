@@ -9,7 +9,7 @@ def setup_database():
     project_dir = Path(__file__).parent.parent
     db_file = project_dir / "data" / "db.sql" # you have to adjust this if you have changed the file name of the database
     print(db_file.absolute())
-    return SmartHouseRepository(db_file.absolute())
+    return SmartHouseRepository(str(db_file.absolute()))
 
 app = FastAPI()
 
@@ -18,7 +18,7 @@ repo = setup_database()
 smarthouse = repo.load_smarthouse_deep()
 
 # http://localhost:8000/welcome/index.html
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="www"), name="static")
 
 
 # http://localhost:8000/ -> welcome page
@@ -34,9 +34,6 @@ def hello(name: str = "world"):
 
 
 # Starting point ...
-@app.get("/hello")
-def hello(name: str = "world") -> dict[str, str]:
-    return {"hello": name}
 
 @app.get("/smarthouse")
 def get_smarthouse_info() -> dict[str, int | float]:

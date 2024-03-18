@@ -151,7 +151,7 @@ For å komme inn i det virtuelle miljøet igjen gjør du akkurat likt som beskre
 Husk at dette også må gjøres når du starter PCen din på nytt eller du åpner et nytt terminalvindu.
 
 I tillegg vil du kanskje også at din editor eller IDE samarbeider med det virtuelle miljøet. 
-Sjekk dokumentasjonen til [VS Code](https://code.visualstudio.com/docs/python/environments) eller [PyCharm](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html).
+Sjekk dokumentasjonen til [VS Code](https://code.visualstudio.com/docs/python/environments#_working-with-python-interpreters) eller [PyCharm](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html).
 I de fleste tilfellene vil disse automatisk oppdager at det finnes en `venv` i ditt prosjekt og forholder seg tilsvarende.
 
 ## Oppgavebeskrivelse
