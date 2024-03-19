@@ -44,6 +44,11 @@ FastAPI er ikke en del Python sin standard bibliotek og må derfor installeres s
 Installasjon av packages kan være en utfordring siden man må manøvrere ting som [Externally Managed Environments](https://packaging.python.org/en/latest/specifications/externally-managed-environments/#externally-managed-environments), "package managers" som [`pip`](), [`conda`](), [`poetry`]() osv...
 Dette kan være utfordrende i starten!
 
+> [!IMPORTANT]
+> Dette prosjekter at du forutsetter Python i versjon **3.12**
+> hvis din `python -V` viser et tall lavere enn `3.12.0` så må du først installere 
+> den nyeste Python versjonen og legger den på din `PATH`.
+
 En god praksis er å lage noe som kalles en [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) for  hver Python prosjekt. 
 Dette gjør at man kan styre hvilken Python-fortolker som skal brukes og for å kunne holde paketer adskilt. 
 
