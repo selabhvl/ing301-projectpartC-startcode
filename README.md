@@ -184,10 +184,35 @@ Det skal finnes spesielle endepunkter for tilgang til aktuator funskjoner:
 - `GET smarthouse/actuator/{uuid}/current` - get current state for actuator `uuid`
 - `PUT smarthouse/device/{uuid}` - update current state for actuator `uuid`
 
-For de fleste av endepunktenes funksjonalitet kan en mye av funksjonene i `SmartHouse`-klassen sannsynligvis gjenbrukes. 
-For noen må kanskje nytt funksjonalitet utvikles (husk også database tilkoblingen).
-Husk også at data som returneres fra endepunktet eller sendes til endepunktet skal være i [JSON](https://www.json.org/json-en.html)-formatet.
-FastAPI er i stand til å automatisk overføre Python objekter til JSON i noen tilfelle:
+For de fleste av endepunktenes funksjonalitet kan en mye av funksjonene i `SmartHouse`-klassen sannsynligvis gjenbrukes
+og noen steder kan det være relevant og koble seg mot databasen ved bruk av `SmartHouseRepository`.
+Muligens sistnevnte må utvides med funksjonalitet for å oppfylle alle kravene stil av endepunkt-spesifikasjonen 
+ovenfor. 
+
+> [!WARNING]
+> Når du i løpet av oppgaven skal legge til en database-forbindelse ved å bruke `SmartHouseRepository` kan det være
+> at du løper i en feilmelding som 
+> ```
+> ...
+> SQLite objects created in a thread can only be used in that same thread.
+> ```
+> I dette tilfelle må du erstatte en linje i konstruktoren til `SmartHouseRepository` i `persistence.py`.
+> Konkret må
+> ```python
+> def __init__(self, file: str) -> None:
+>     self.file = file
+>     self.conn = sqlite3.connect(file)
+> ```
+> byttes ut mot
+> ```python
+> def __init__(self, file: str) -> None:
+>     self.file = file
+>     self.conn = sqlite3.connect(file, check_same_thread=False)
+> ```
+
+
+Husk at data som returneres fra endepunktet eller sendes til endepunktet skal være i [JSON](https://www.json.org/json-en.html)-formatet.
+FastAPI er i stand til å automatisk overføre Python objekter til JSON i tilfelle av innebygde Python verdier:
 
 - strenger (`str`),
 - tall (`int`, `float`),
@@ -195,22 +220,11 @@ FastAPI er i stand til å automatisk overføre Python objekter til JSON i noen t
 - `None`-verdien,
 - lister og ordbøker med streng-nøkler som igjen inneholder lister, ordbøker eller verdiene nevnt ovenfor.
 
-Alternativt kan du også bruke [Pydantic](https://docs.pydantic.dev/latest/)-biblioteket (den kommer automatisk med når man installerer FastAPI)
+Når du har definert din egen klass må du i utgangspunktet skrive din egen _serialiserings_-mekanisme.
+Men du kan også bruke [Pydantic](https://docs.pydantic.dev/latest/)-biblioteket (den kommer automatisk med når man installerer FastAPI)
 for å [oversette dine egne klasser automatisk](https://docs.pydantic.dev/latest/concepts/models/).
 
-Viktig er at dere på forhånd tar en avgjørelse om hvordan inn- og utdata for hver endepunkt skal være strukturert. 
-
-> [!WARNING]
-> Når du i løpet av oppgaven skal legge til en database-forbindelse ved å bruke `SmartHouseRepository` kan det være
-> at du løper i en feilmelding som `SQLite objects created in a thread can only be used in that same thread.` i så fall
-> må du erstatte følgende linjen i `persistenc.py`
-> ```python
-> self.conn = sqlite3.connect(file, check_same_thread=False)
-> ```
-> med 
-> ```python
-> self.conn = sqlite3.connect(file, check_same_thread=False)
-> ```
+**Viktig** er at dere på forhånd tar en avgjørelse om hvordan inn- og utdata for hver endepunkt skal være strukturert. 
 
 
 ## Testing 
@@ -218,8 +232,11 @@ Viktig er at dere på forhånd tar en avgjørelse om hvordan inn- og utdata for 
 En del av oppgaven er å teste deres endepunkter. 
 For dette anbefaler vi Bruno-verktøyet som gjør det mulig å lage en _Collection_ av test-request og sjekker disse inn i git.
 Dette startkode repository inneholder en slik påbegynt "Test-Suite" som ligger under `tests/bruno`.
-Du kan åpne denne samlingen ved å trykke "Open Collection" når du starter Bruno og så navigerer du den nevnte mappen i din filsystem. 
-Her er det også demonstrert hvordan du kan bruker _variable_ og hvordan man skrive tests i Bruno ved brul av _assertions_ (forventninger).
+Du kan åpne denne samlingen ved å trykke "Open Collection" når du starter Bruno på første gang 
+eller hvis du allerede har lagt noen collections selv så trykker du på de tre prikkene oppe til høyre og velger 
+"_Open Collection_" derifra.
+Det åpner seg en filutforsker-vindu der du kan navigere til den nevnte mappen i din filsystem. 
+Her er det også demonstrert hvordan du kan bruker _variable_ og hvordan man skrive tester i Bruno ved bruk av _assertions_ (forventninger).
 
 ## Tips og diverse
 
@@ -229,7 +246,7 @@ Koden finnes her:
 
 > <https://github.com/selabhvl/ing301public/tree/main/examples/12_restapi_webservices>
 
-Der er også hjelp å hente i dokumentasjonen for FastAPI som finnes via:
+Det er også hjelp å hente i dokumentasjonen for FastAPI som finnes via:
 
 > <https://fastapi.tiangolo.com>
 
