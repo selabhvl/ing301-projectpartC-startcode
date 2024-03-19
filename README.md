@@ -50,7 +50,7 @@ Dette gjør at man kan styre hvilken Python-fortolker som skal brukes og for å 
 For å oprette en slik virtual environment åpner du et nytt terminalvindu og så beveger du deg inn i prosjektmappen.
 Her utfører du følgende kommando:
 ```powershell
-py -m venv .venv
+python -m venv .venv
 ```
 hvis du bruker Windows, eller
 ```shell
