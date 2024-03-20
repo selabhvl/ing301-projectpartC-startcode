@@ -45,33 +45,42 @@ Installasjon av packages kan være en utfordring siden man må manøvrere ting s
 Dette kan være utfordrende i starten!
 
 > [!IMPORTANT]
-> Dette prosjekter at du forutsetter Python i versjon **3.12**
-> hvis din `python -V` viser et tall lavere enn `3.12.0` så må du først installere 
-> den nyeste Python versjonen og legger den på din `PATH`.
+> Dette prosjekter forutsetter at du bruker Python i versjon nyere eller lik **3.12**!
+> Hvis din `python -V` altså viser et tall lavere enn `3.12.0` så må du [først installere](https://wiki.python.org/moin/BeginnersGuide/Download)
+> den nyeste Python versjonen og [legger den på din `PATH`](https://docs.python.org/3/using/windows.html#excursus-setting-environment-variables).
+
+### Virtual Environment Setup
 
 En god praksis er å lage noe som kalles en [virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) for  hver Python prosjekt. 
 Dette gjør at man kan styre hvilken Python-fortolker som skal brukes og for å kunne holde paketer adskilt. 
 
 For å oprette en slik virtual environment åpner du et nytt terminalvindu og så beveger du deg inn i prosjektmappen.
 Her utfører du følgende kommando:
-```powershell
+```bat
 python -m venv .venv
 ```
 hvis du bruker Windows, eller
-```shell
+```bash
 python3 -m venv .venv
 ```
 hvis du bruker Linux/UNIX/MacOS.
 
-Vær også obs på at under noen operativsystemer må `venv`-modulen installeres for første gang gjennom operativsystemets pakkeforvaltning, f.eks.
-under Ubuntu må du utføre:
-```shell
-sudo apt-get install python3-venv
+Hvis du får en melding som `module 'venv' not found` så må du installere den først i din system interpreter med:
+```bat 
+python -m pip install venv
+```
+Vær obs på at under noen operativsystemer/installasjoner der 
+[Python fortolkeren forvaltes av operativsystemet eller tilsvarende pakkeforvaltning](https://packaging.python.org/en/latest/specifications/externally-managed-environments/#externally-managed-environments),
+så må `venv`-modulen installeres gjennom operativsystemets pakkeforvaltning, f.eks.
+```bash
+sudo apt-get install python3-venv # Debian/Ubuntu
+brew install virtualenv # brukere av Homebrew under MacOS
+choco install python3-virtualenv # brukere av Chocolatey under Windows
 ```
 
 Etter at det virtuelle Python miljøet er blitt opprettet må det aktiveres med
-```powershell 
-.venv\Scripts\activate
+```bat 
+.venv\Scripts\activate.bat
 ```
 under Windows, eller 
 ```shell
@@ -83,37 +92,36 @@ under Linux/UNIX/MacOS.
 Du vil nå se at ledeteksten i konsollen har forandret seg litt og hvis du nå sjekker hvilke `python` og `pip` er som aktive:
 
 Windows:
-```powershell
+```bat
 where python 
 where pip
 ```
 
 Linux/UNIX/MacOS
-```shell
+```bash
 which python 
-which pip
+which pip3
 ```
 
 Da vil du se at disse nå peker mot den `.venv`-mappen som ble opprettet før.
 
+### Installere avhengigheter
+
 Nå at det virtuelle Python miljø er på plass er det lurt å sjekke om `pip` der og oppdatert:
 ```shell
-python -m pip install --upgrade pip
+pip install --upgrade pip
 ```
-Istedenfor `python -m pip` burde du også kunne skrive bare `pip`.
-Hvis du får en feilmelding at modulen `pip` kan ikke finnes så må du eventuelt sjekke om denne pakken må installeres 
-gjennom operativsystemets forvaltningssystem (noe som heter `python3-pip`).
 
 Når `pip` er på plass kan _FastAPI_ samt avhengigheter installeres ved å kjøre følgende kommandoer:
 ```
-python -m pip install fastapi 
-python -m pip install "uvicorn[standard]"
+pip install fastapi 
+pip install "uvicorn[standard]"
 ```
 
 Nå skulle alt være på plass for å kunne kjøre applikasjonen:
 
-```shell
-python -m uvicorn smarthouse.api:app --reload
+```bash
+uvicorn smarthouse.api:app --reload
 ```
 
 når konsollen viser noe slik:
@@ -137,9 +145,9 @@ vil gi deg en oversikt over REST ressursene som finnes.
 Hvis du ikke allerede har gjort det, så er det nå en god tidspunkt å laste ned [Bruno](https://www.usebruno.com/), 
 starte det, lage en ny "collection" og prøve å sende en HTTP GET request til `http:127.0.0.1:8000/hello`.
 
-Gratulerer! Da er Setup avsluttet og du er klar til å begynne med oppgaven!
+Gratulerer! Da er Setup avsluttet og du er [klar til å begynne med oppgaven!](#Oppgavebeskrivelse)
 
-## Noen ord vedrørende virtuelle Python miljø
+### Noen ord vedrørende virtuelle Python miljø
 
 Enn så lenge du holder konsollen åpen så vil være web-tjeneren være aktivt.
 I tillegg vil den automatisk reagere på alle endringer i koden og automatisk oppdatere seg slik
@@ -148,7 +156,7 @@ Når du vil likevel avslutte applikasjonen må du sette fokus på terminalvindue
 samtidig, da kommer du tilbake til ledeteksten.
 
 Hvis du vil gå ut av det virtuelle Python miljøet (f.eks. for å jobbe med et annen Python projsket) kan du kalle:
-```shell
+```bash
 deactivate
 ```
 
