@@ -80,9 +80,9 @@ choco install python3-virtualenv # brukere av Chocolatey under Windows
 
 Etter at det virtuelle Python miljøet er blitt opprettet må det aktiveres med
 ```bat 
-.venv\Scripts\activate.bat
+.venv\Scripts\Activate.ps1
 ```
-under Windows, eller 
+under Windows (vi antar at du bruker PowerShell), eller 
 ```shell
 source .venv/bin/activate
 ```
