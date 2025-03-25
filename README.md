@@ -93,14 +93,14 @@ Du vil nå se at ledeteksten i konsollen har forandret seg litt og hvis du nå s
 
 Windows:
 ```bat
-where python 
-where pip
+Get-Command python 
+Get-Command pip
 ```
 
 Linux/UNIX/MacOS
 ```bash
 which python 
-which pip3
+which pip
 ```
 
 Da vil du se at disse nå peker mot den `.venv`-mappen som ble opprettet før.
@@ -114,14 +114,13 @@ pip install --upgrade pip
 
 Når `pip` er på plass kan _FastAPI_ samt avhengigheter installeres ved å kjøre følgende kommandoer:
 ```
-pip install fastapi 
-pip install "uvicorn[standard]"
+pip install "fastapi[standard]" 
 ```
 
 Nå skulle alt være på plass for å kunne kjøre applikasjonen:
 
 ```bash
-uvicorn smarthouse.api:app --reload
+fastapi dev smarthouse/api.py
 ```
 
 når konsollen viser noe slik:
@@ -257,7 +256,7 @@ For å løse oppgaven kan det være en god idé å søke inspirasjon i eksemplet
 
 Koden finnes her:
 
-> <https://github.com/selabhvl/ing301public/tree/main/examples/12_restapi_webservices>
+> <https://github.com/selabhvl/ing301public/blob/main/weeks/13/bc_server.py>
 
 Det er også hjelp å hente i dokumentasjonen for FastAPI som finnes via:
 
